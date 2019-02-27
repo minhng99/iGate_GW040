@@ -1,0 +1,73 @@
+<html>
+   <head>
+      <meta http-equiv='Pragma' content='no-cache'>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+          <script language="javascript" src="portName.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function frmLoad() {
+   var updateIfc = '<%ejFncCmd(stsifcupdate)%>';
+}
+
+function resetClick() {
+   var loc = 'statsifcreset.html';
+
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <table>
+			<tr><td class=h1>Statistics -- LAN</td></tr></table><br>
+            <br>
+            <table class='wholetable' border="1" cellpadding="2" cellspacing="0" style="width:100%">
+               <tr>
+                  <td class='hd' rowspan="3"><center>Interface</center></td>
+                  <td class='hd' colspan="8"><center>Received</center></td>
+                  <td class='hd' colspan="8"><center>Transmitted</center></td>
+               </tr>
+               <tr align='center'>                         
+                  <td class='hd' colspan='4' align='center'>Total</td>               
+                  <td class='hd' colspan='2' align='center'>Multicast</td>               
+                  <td class='hd' colspan='1' align='center'>Unicast</td>               
+                  <td class='hd' colspan='1' align='center'>Broadcast</td>               
+                  <td class='hd' colspan='4' align='center'>Total</td>               
+                  <td class='hd' colspan='2'align='center'>Multicast</td>               
+                  <td class='hd' colspan='1'align='center'>Unicast</td>               
+                  <td class='hd' colspan='1'align='center'>Broadcast</td>               
+               </tr>                      
+               <tr>
+                  <td class='hd' align='center'>Bytes</td>
+                  <td class='hd' align='center'>Pkts</td>
+                  <td class='hd' align='center'>Errs</td>
+                  <td class='hd' align='center'>Drops</td>
+                  <td class='hd' align='center'>Bytes</td>
+                  <td class='hd' align='center'>Pkts</td>
+                  <td class='hd' align='center'>Pkts</td>
+                  <td class='hd' align='center'>Pkts</td>
+                  <td class='hd' align='center'>Bytes</td>
+                  <td class='hd' align='center'>Pkts</td>
+                  <td class='hd' align='center'>Errs</td>
+                  <td class='hd' align='center'>Drops</td>
+                  <td class='hd' align='center'>Bytes</td>
+                  <td class='hd' align='center'>Pkts</td>
+                  <td class='hd' align='center'>Pkts</td>
+                  <td class='hd' align='center'>Pkts</td>
+               </tr>
+               <tr>
+               <%ejGetOther(stsifcget,0,0)%>
+            </table>
+            <br>
+            <br>
+            <center><input type='button' onClick='resetClick()' value='Reset Statistics'></center>
+         </form>
+      </blockquote>
+   </body>
+</html>

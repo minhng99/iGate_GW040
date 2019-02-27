@@ -1,0 +1,284 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript" src="portName.js"></script>
+            <script language="javascript">
+<!-- hide
+
+var ssid_1 = '<%ejGetWl(wlSsid_wl0v1)%>';
+var enbl_1 = '<%ejGetWl(wlEnbl_wl0v1)%>';
+var ssid_2 = '<%ejGetWl(wlSsid_wl0v2)%>';
+var enbl_2 = '<%ejGetWl(wlEnbl_wl0v2)%>';
+var ssid_3 = '<%ejGetWl(wlSsid_wl0v3)%>';
+var enbl_3 = '<%ejGetWl(wlEnbl_wl0v3)%>';
+var ssid = '<%ejGetWl(wlSsid_wl0v0)%>';
+var enbl = '<%ejGetWl(wlEnbl_wl0v0)%>';
+var currentUser ='<%ejGet(curUserName)%>';
+
+function vlanconvert(obj,ifname){
+	var x = obj.substr(0,4);
+	var y = obj.substr(4);
+	var z = '';
+	
+	if (ifname == "wl0") {
+		z = ssid;
+	}	
+	else if (ifname == "wl0.1") {
+		z = ssid_1;
+	}
+	else if (ifname == "wl0.2") {
+		z = ssid_2;
+	}
+	else if (ifname == "wl0.3") {
+		z = ssid_3;
+	}
+	else if (x == "eth0") {
+		z = "lan1"+y;
+	}
+	else if (x == "eth1") {
+		z = "lan2"+y;
+	}
+	else if (x == "eth2") {
+		z = "lan3"+y;
+	}
+	else if (x == "eth3") {
+		z = "lan4"+y;
+	}	
+	else 
+		z = obj;
+	return z;
+}
+/*
+function btnRemove() {
+   with ( document.choiceForm ) {
+      var arrSelected = new Array();
+      var count = 0;
+      for ( i = 0; i < lstChoice.options.length; i++ ) {
+         if ( lstChoice.options[i].selected == true ) {
+            arrSelected[count] = lstChoice.options[i].value;
+         }
+         count++;
+      }
+      var x = 0;
+      for (i = 0; i < lstChoice.options.length; i++) {
+         for (x = 0; x < arrSelected.length; x++) {
+            if (lstChoice.options[i].value == arrSelected[x]) {
+               varOpt = new Option(lstChoice.options[i].text, lstChoice.options[i].value);
+               lstAvailable.options[lstAvailable.length] = varOpt;
+               lstChoice.options[i] = null;
+            }
+         }
+      }
+   }
+}
+
+function btnAdd() {
+   with ( document.choiceForm ) {
+      var arrSelected = new Array();
+      var count = 0;
+      for ( i = 0; i < lstAvailable.options.length; i++ ) {
+         if ( lstAvailable.options[i].selected == true ) {
+            arrSelected[count] = lstAvailable.options[i].value;
+         }
+         count++;
+      }
+      var x = 0;
+      for (i = 0; i < lstAvailable.options.length; i++) {
+         for (x = 0; x < arrSelected.length; x++) {
+            if (lstAvailable.options[i].value == arrSelected[x]) {
+               varOpt = new Option(lstAvailable.options[i].text, lstAvailable.options[i].value);
+               lstChoice.options[lstChoice.length] = varOpt;
+               lstAvailable.options[i] = null;
+            }
+         }
+      }
+   }
+}
+*/
+function btnApply() {
+   var loc = 'portmapcfg.cmd?action=add';
+   with ( document.forms[0] ) {
+      var i = 0;
+	  var count = 0;
+	  var lst = document.forms[0].lstAvailable;
+      if (groupName.value == '') {
+         alert('Need to provide a valid Group Name "A non empty string of characters."');
+         return;
+      }
+      if (vendorid0.value != '')
+         loc += '&vendorid0=' + vendorid0.value;
+      if (vendorid1.value != '')
+         loc += '&vendorid1=' + vendorid1.value;
+      if (vendorid2.value != '')
+         loc += '&vendorid2=' + vendorid2.value;
+      if (vendorid3.value != '')
+         loc += '&vendorid3=' + vendorid3.value;
+      if (vendorid4.value != '')
+         loc += '&vendorid4=' + vendorid4.value;
+
+      var vendoridUsed = loc.search('&vendorid');
+	  
+	   for (i = 0; i < lst.length; i++ ) {
+	   if(lst[i].checked){
+         count++;
+		}
+		}
+       if (count == 0 && vendoridUsed == -1) {
+        alert('Need to provide at least one interface from "Select one from the LAN Available list OR enter some Vendor IDs"');
+        return;
+	  }
+      loc += '&groupName=' + groupName.value;
+
+      var ifc = '';
+      for (i = 0; i < lst.length; i++ ) {
+		if(lst[i].checked){
+         ifc += lst[i].value + '|';
+		 }
+      }
+	  
+      loc += '&choiceBox=' + ifc;
+
+      var idx = wanIf.selectedIndex;
+      var wanIfc = wanIf.options[idx].value;
+      loc += '&wanIfName=' + wanIfc;
+	  
+   }
+   loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body>
+      <blockquote>
+         <form name="choiceForm">
+			<table><tr><td class='h1'>Interface grouping Configuration</td></tr></table><br>
+            <br>
+            To create a new interface group:
+            <br>
+            <b>1.</b> Enter the Group name and the
+            group name must be unique and select either 2. (dynamic) or 3. (static) below:
+            <br><br>
+            <b>2.</b> If you like to automatically add LAN clients to a WAN Interface in the new group
+            add the DHCP vendor ID string. By configuring a DHCP vendor ID string
+            any DHCP client request with the specified vendor ID (DHCP option 60)
+            will be denied an IP address from the local DHCP server. 
+            <br><br>
+            <b>3.</b>Select interfaces from the available interface list and add it to the grouped
+            interface list using the arrow buttons to create the required mapping of the ports.
+            <b>Note that these clients may obtain public IP addresses</b>
+            <br><br>
+            <b>4.</b> Click Apply/Save button to make the changes effective immediately
+            <br><br>
+            <br><br>
+            <b>IMPORTANT If a vendor ID is configured for a specific client device,
+            please REBOOT the client device attached to the modem to allow it to
+            obtain an appropriate IP address.</b>
+            <br><br>
+            <b>Group Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <input type="text" name="groupName" size="32" maxlength="32"></b>
+            <br><br>
+               <table>
+                  <tr>
+                     <td><b>WAN Interface used in the grouping</b></td>
+                     <td><select name='wanIf'>
+                           <script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var interfaceInfo = '<%ejGetOther(wanInterfaceInfo, allEoAPvc)%>';
+   var interfaces = interfaceInfo.split('|');
+   
+   for ( i = 0; i < interfaces.length; i++ ) {
+      var names = interfaces[i].split('/');
+ 
+      document.write("  <option value='" + names[1] + "'>");
+      document.writeln(interfaces[i]);
+   }
+               	}
+// done hiding -->
+</script>
+                        </select></td>
+                  </tr>
+               </table>
+            <br><br><br>
+               
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td width="230"><b>Available LAN Interfaces</b></td>
+				  
+               <td colspan="3">&nbsp;</td>
+<script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var dispName = '';
+   var brdId = '<%ejGet(boardID)%>';
+   var interfaceInfo = '<%ejGetOther(bridgeInterfaceInfo, all)%>';
+   var interfaces = interfaceInfo.split('|');
+   interfaces.sort();
+   for ( i = 0; i < interfaces.length; i++ ) {
+	  dispName = getUNameByLName(brdId + '|' + interfaces[i]);
+	  if(interfaces[i] == 'wl0'){
+		 if(enbl == 1){
+		 document.write("<input type='checkbox' name='lstAvailable' value='" + interfaces[i] +"'>" + ssid + "<br>");
+		 }
+	  }
+	  else if(interfaces[i] == 'wl0.1'){
+		 if(enbl_1 == 1){
+		 document.write("<input type='checkbox' name='lstAvailable' value='" + interfaces[i] +"'>" + ssid_1 + "<br>");
+		 }
+	  }
+	  else if(interfaces[i] == 'wl0.2'){
+		 if((enbl_2 == 1) && (currentUser!='admin')){
+		 document.write("<input type='checkbox' name='lstAvailable' value='" + interfaces[i] +"'>" + ssid_2 + "<br>");
+		 }
+	  }
+	  else if(interfaces[i] == 'wl0.3'){
+		 if(enbl_3 == 1){
+		 document.write("<input type='checkbox' name='lstAvailable' value='" + interfaces[i] +"'>" + ssid_3 + "<br>");
+		 }
+	  }
+      else if (interfaces[i] != '') {
+		 document.write("<input type='checkbox' name='lstAvailable' value='" + interfaces[i] +"'>" + vlanconvert(dispName,interfaces[i]) + "<br>");
+      }
+   }
+}
+// done hiding -->
+                         </script>
+</td></tr>
+               </table>
+               <br><br>
+               <table>
+                  <tr>
+                     <td width="150"><b>Automatically Add Clients With the following DHCP Vendor IDs</b></td>
+                  </tr>
+                  <tr>
+                     <td><input type='text' name='vendorid0' size="32" maxlength="64"></td>
+                  </tr>
+                  <tr>
+                     <td><input type='text' name='vendorid1' size="32" maxlength="64"></td>
+                  </tr>
+                  <tr>
+                     <td><input type='text' name='vendorid2' size="32" maxlength="64"></td>
+                  </tr>
+                  <tr>
+                     <td><input type='text' name='vendorid3' size="32" maxlength="64"></td>
+                  </tr>
+                  <tr>
+                     <td><input type='text' name='vendorid4' size="32" maxlength="64"></td>
+                  </tr>
+               </table>
+            <br><br>
+            <center>
+               <input type='button' onClick='btnApply()' value='Apply/Save'>
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>

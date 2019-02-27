@@ -1,0 +1,113 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+
+<script type="text/javascript"> 
+
+
+function concationation(f)
+{
+
+	var url= f + ".cmd?";
+	var rawFile = new XMLHttpRequest();
+	rawFile.open("POST",url, true);
+	rawFile.onreadystatechange = function ()
+	{
+		if(rawFile.readyState == 4)
+		{
+			if(rawFile.status == 200 || rawFile.status == 0)
+			{
+				if( (rawFile.responseText != "PINGEND") && (rawFile.responseText != "BADADD")&&(rawFile.responseText != "ERROR") )
+				{
+					document.myform.outputtext.value = rawFile.responseText;
+					setTimeout(concationation(f),2000);
+				}
+				else if(rawFile.responseText == "BADADD")
+				{ 
+					document.myform.outputtext.value = "bad address, please check again";
+					document.myform.Button1.disabled=false;
+				}
+				else if(rawFile.responseText == "ERROR")
+				{ 
+					document.myform.outputtext.value = "check your network or address";
+					document.myform.Button1.disabled=false;
+				}
+				else
+				{
+					document.myform.Button1.disabled=false;
+				}
+				
+			}
+		}
+	}
+	rawFile.send(null);
+}
+
+function call()
+{
+	document.myform.Button1.disabled=true;
+	document.myform.outputtext.value="Loading ...";
+	var cmdvalue = "ping";
+
+	with ( document.myform )
+	{
+		if ( cmd[0].checked == true ) 
+		   {
+				 cmdvalue = "ping";
+		   }
+		else
+			  {
+				 cmdvalue = "trace";
+			  }
+	}
+	 
+	var url="/diag"+cmdvalue+".cmd?action="+document.myform.address.value;
+	var rawFile = new XMLHttpRequest();
+	rawFile.open("POST",url, true);
+	rawFile.onreadystatechange = function ()
+	{
+		if(rawFile.readyState == 4)
+		{
+			if(rawFile.status == 200 || rawFile.status == 0)
+			{
+				var dTp = rawFile.responseText;
+				document.myform.outputtext.value = "";
+				setTimeout(concationation(dTp),2000);
+			}
+		}
+	}
+	rawFile.send(null);
+
+}
+</script>
+   </head>
+   <body>
+     <blockquote>
+        <form name="myform">
+        	<table><tr><td class='h1'>Diagnostic Tools</td></tr></table><br>
+          <br>
+	        <table border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="100">Ip Address:</td>
+            <td><input type='text' name='address' size='20' maxlength="63" value="192.168.1.1" ></td>
+          </tr>
+            <tr>
+            	<td></td>
+              <td colspan="2"><input type='radio' name='cmd' checked >&nbsp;&nbsp;Ping</td>
+            </tr>
+            <tr>
+            	<td></td>
+              <td colspan="2"><input type='radio' name='cmd' >&nbsp;&nbsp;Trace</td>
+            </tr>
+          </table>
+          <br>
+          <br>
+          <textarea name="outputtext" cols="60" rows="10">output</textarea><br><br>
+          <p align="center"><input type='button' onClick='call()' value='Run' name="Button1"></p>
+  
+</form>
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript">
+<!-- hide
+
+var sessionKey='<%ejGetOther(sessionKey)%>';
+function btnReset() {
+   var loc = 'rebootinfo.cgi?';
+
+   loc += 'sessionKey=' + sessionKey;
+
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+var r = confirm("Save Config Error! \nPress OK to reboot device and try config again");
+if (r == true) {
+    btnReset();
+} else {
+
+}
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+   </body>
+</html>

@@ -1,0 +1,7 @@
+# VNPT applications
+
+BEGIN
+  eid         = EID_VNPT_MDM2NVRAM
+  name        = mdm2nvram
+  flags       = EIF_MDM|EIF_LAUNCH_ON_BOOT|EIF_MESSAGING_CAPABLE
+END

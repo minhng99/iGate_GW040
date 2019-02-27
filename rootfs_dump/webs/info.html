@@ -1,0 +1,329 @@
+<html>
+   <head>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <meta http-equiv="Pragma" content="no-cache">
+            <title></title>
+            <base target="_self">
+            <script language="javascript">
+<!-- hide
+var ip6DftGwIfInfo = '<%ejGetOther(sysInfo,ip6DftGwIfInfo)%>';
+var ipDftGwIfInfo = '<%ejGetOther(sysInfo,ipDftGwIfInfo)%>';
+
+function infoGet (info, field)
+{
+    var result = '';
+    var fieldLst = info.split ("&");
+
+    for (i = 0; i < fieldLst.length; i++)
+    {
+        var tmp = fieldLst[i].split ("=");
+        if (field == tmp[0])
+        {
+            result = tmp[1];
+            break;
+        }
+    }
+
+    if ('ipVer' == field)
+    {
+        if ('1' == result)
+        {
+            result = 'IPv4&IPv6 (Dual Stack)';
+        }
+        else if ('2' == result)
+        {
+            result = 'IPv6 Only';
+        }
+        else
+        {
+            result = 'IPv4 Only';
+        }
+    }
+    else if ('ipOnlineDur' == field || 'ip6OnlineDur' == field)
+    {
+        result += ' secs';
+    }
+
+    return result;
+}
+// done hiding -->
+            </script>
+   </head>
+   <body>
+      <blockquote>
+         <form><table>
+            <tr><td class="h1">Device Info</td></tr>
+               <table border="1" cellpadding="3" cellspacing="0" style="width:500">
+			   <br>
+               <tr>
+                  <td class='hd' width="50%">Product name:</td>
+                  <td width="50%">iGate GW040</td>
+               </tr>
+
+<script language="javascript">
+<!-- hide
+var numCpuThreads = '<%ejGet(numCpuThreads)%>';
+if ( numCpuThreads == 2 ) {
+  document.writeln("               <tr>");
+  document.writeln("                  <td class='hd'>Symmetric CPU Threads:</td>");
+  document.writeln("                  <td><%ejGet(numCpuThreads)%></td>");
+  document.writeln("               </tr>");
+}
+// done hiding -->
+</script>
+
+               <tr>
+                  <td class='hd'>Build Timestamp:</td>
+                  <td><%ejGet(cmsBuildTimestamp)%></td>
+               </tr>
+               <tr>
+                  <td class='hd'>Software Version:</td>
+                  <td><%ejGet(sysVersion)%></td>
+               </tr>
+
+<script language="javascript">
+<!-- hide
+var buildAtm = '<%ejGetOther(sysInfo, buildAtm)%>';
+var buildPtm = '<%ejGetOther(sysInfo, buildPtm)%>';
+if ( buildAtm == 1 || buildPtm == 1 ) {
+  document.write("<tr>");
+  document.write("<td class='hd'>DSL PHY and Driver Version:</td>");
+  document.write("<td><%ejGet(dslPhyDrvVersion)%></td>");
+  document.write("</tr>");
+}
+// done hiding -->
+</script>
+
+<script language="javascript">
+<!-- hide
+if ('<%ejGetOther(sysInfo, buildSupportPlc)%>' == '1') {
+  document.writeln("               <tr>");
+  document.writeln("                  <td class='hd'>Homeplug Driver Version:</td>");
+  document.writeln("                  <td><%ejGet(plcVersion)%></td>");
+  document.writeln("               </tr>");
+}
+// done hiding -->
+</script>
+
+<script language="javascript">
+<!-- hide
+var buildMoca = '<%ejGetOther(sysInfo, buildSupportMoca)%>';
+if ( buildMoca == 1 ) {
+  document.writeln("               <tr>");
+  document.writeln("                  <td class='hd'>Moca Version:</td>");
+  document.writeln("                  <td><%ejGet(mocaVersion)%></td>");
+  document.writeln("               </tr>");
+}
+// done hiding -->
+</script>
+
+<script language="javascript">
+<!-- hide
+var voice = '<%ejGetVoice(voiceProtocol)%>';
+if ( voice == 'SIP' || voice == 'MGCP' ) {
+  document.writeln("               <tr>");
+  document.writeln("                  <td class='hd'>Voice Service Version:</td>");
+  document.writeln("                  <td><%ejGet(voiceServiceVersion)%></td>");
+  document.writeln("               </tr>");
+}
+// done hiding -->
+</script>
+
+               <tr>
+                  <td class='hd'>Uptime:</td>
+                  <td><%ejGetOther(sysInfo, uptimeString)%></td>
+               </tr>
+
+        </table>
+            <br>
+            </b>This information reflects the current status of your WAN connection.<br>
+            <br>
+            <table border="1" cellpadding="3" cellspacing="0" style="width:500">
+               <tr>
+               
+<script language="javascript">
+<!-- hide
+var VdslIncluded = '<%ejGetOther(isVdsl, VdslIncluded)%>';
+var DslBondingEnabled = '<%ejGetOther(isDslBondingEnabled)%>';
+if ( DslBondingEnabled == 1 ) {
+  document.write("<tr>");
+  document.write("<td class='hd'>Traffic Type:</td>");
+  document.write("<td><%ejGetOther(trafficType, 0)%></td>");
+  document.write("</tr>");
+  document.write("<tr>");
+  document.write("<td class='hd'>Aggregate Line Rate - Upstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 0, 0)%></td>");
+  document.write("</tr>");
+  document.write("<tr>");
+  document.write("<td class='hd'>Aggregate Line Rate - Downstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 1, 0)%></td>");
+  document.write("</tr>");
+}
+else if ( VdslIncluded == 1 ) {
+  document.write("<tr>");
+  document.write("<td class='hd'>B0 Traffic Type:</td>");
+  document.write("<td><%ejGetOther(trafficType, 0)%></td>");
+  document.write("</tr>");
+  document.write("<tr>");
+  document.write("<td class='hd'>B0 Line Rate - Upstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 0, 0)%></td>");
+  document.write("</tr>");
+  document.write("<tr>");
+  document.write("<td class='hd'>B0 Line Rate - Downstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 1, 0)%></td>");
+  document.write("</tr>");
+  document.write("<tr>");
+  document.write("<td class='hd'>B1 Traffic Type:</td>");
+  document.write("<td><%ejGetOther(trafficType, 1)%></td>");
+  document.write("</tr>");
+  document.write("<tr>");
+  document.write("<td class='hd'>B1 Line Rate - Upstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 0, 1)%></td>");
+  document.write("</tr>");
+  document.write("<tr>");
+  document.write("<td class='hd'>B1 Line Rate - Downstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 1, 1)%></td>");
+  document.write(" </tr>");
+}
+else if ( buildAtm == 1 || buildPtm == 1 ) {
+  document.write("<tr>");
+  document.write("<td class='hd'>Line Rate - Upstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 0, 0)%></td>");
+  document.write("</tr>" );
+  document.write("<tr>");
+  document.write("<td class='hd'>Line Rate - Downstream (Kbps):</td>");
+  document.write("<td><%ejGetOther(lineRate, 1, 0)%></td>");
+  document.write("</tr>");
+}
+
+// done hiding -->
+</script>
+<script language="javascript">
+<!-- hide
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Type</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'type') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Interface Name</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'ipIfcDftGw') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>IP Version</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'ipVer') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Connection Status</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'ipConnStat') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Online Duration</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'ipOnlineDur') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>IP Address</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'ipAddr') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Subnet Mask</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'ipMask') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Default Gateway</td>");
+document.writeln ("<td>" + infoGet (ipDftGwIfInfo, 'ipDftGw') + "</td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Primary DNS Server:</td>");
+document.writeln ("<td><%ejGetOther(sysInfo, dns1)%></td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>Secondary DNS Server</td>");
+document.writeln ("<td><%ejGetOther(sysInfo, dns2)%></td>");
+document.writeln ("</tr>");
+document.writeln ("<tr>");
+document.writeln ("<td class='hd' width='50%'>LAN IP Address</td>");
+document.writeln ("<td><%ejGetOther(sysInfo, lanAddr)%></td>");
+document.writeln ("</tr>");
+// done hiding -->
+</script>
+<script language="javascript">
+<!-- hide
+var buildSntp = '<%ejGetOther(sysInfo, buildSntp)%>';
+var enblSntp = '<%ejGet(ntp_enabled)%>';
+var proto = '<%ejGetOther(sysInfo, noBrPrtcl)%>';
+
+if ( buildSntp == '1' && enblSntp == '1' && proto != 'Bridge' ) {
+  document.writeln("               <tr>");
+  document.writeln("                  <td class='hd'>Date/Time:</td>");
+  document.writeln("                  <td><%ejGetOther(sysInfo, dateTime)%></td>");
+  document.writeln("               </tr>");
+}
+// done hiding -->
+</script>
+            </table>
+            </table>
+<script language="javascript">
+<!-- hide
+if ('1' == '<%ejGetOther(sysInfo, enblIPv6)%>') 
+{
+    document.writeln ("<table>");
+    document.writeln ("    <br></b>IPv6 Information<br><br>");
+    document.writeln ("    <table border='1' cellpadding='3' cellspacing='0' style='width:500'>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>Type</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'type') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>Interface Name</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'ip6IfcDftGw') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>IP Version</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'ipVer') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>Connection Status</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'ip6ConnStat') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>Online Duration</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'ip6OnlineDur') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>IPv6 Address</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'ip6GUA') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>IPv6 Address Link Local</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'ip6LLA') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>Default Router</td>");
+    document.writeln ("            <td>" + infoGet (ip6DftGwIfInfo, 'ip6DftGw') + "</td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>Primary DNS6 Server</td>");
+    document.writeln ("            <td><%ejGetOther(sysInfo,dns6Pri)%></td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'>Secondary DNS Server</td>");
+    document.writeln ("            <td><%ejGetOther(sysInfo,dns6Sec)%></td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'><%ejGetOther(sysInfo,sitePrefixType)%></td>");
+    document.writeln ("            <td><%ejGetOther(sysInfo,sitePrefix)%></td>");
+    document.writeln ("        </tr>");
+    document.writeln ("        <tr>");
+    document.writeln ("            <td class='hd' with='50%'><%ejGetOther(sysInfo,lanIp6AddrType)%></td>");
+    document.writeln ("            <td><%ejGetOther(sysInfo,lanIp6Addr)%></td>");
+    document.writeln ("        </tr>");
+    document.writeln ("    </table>");
+    document.writeln ("</table>");
+}
+// done hiding -->
+</script>
+         </form>
+      </blockquote>
+   </body>
+</html>

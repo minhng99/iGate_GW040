@@ -1,0 +1,269 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var lan1Enl='<%ejGet(bcLan1Enbl)%>';
+var lan2Enl='<%ejGet(bcLan2Enbl)%>';
+var lan3Enl='<%ejGet(bcLan3Enbl)%>';
+var lan4Enl='<%ejGet(bcLan4Enbl)%>';
+var lan1DsRate='<%ejGet(bcLan1DsRate)%>';
+var lan1UsRate='<%ejGet(bcLan1UsRate)%>';
+var lan2DsRate='<%ejGet(bcLan2DsRate)%>';
+var lan2UsRate='<%ejGet(bcLan2UsRate)%>';
+var lan3DsRate='<%ejGet(bcLan3DsRate)%>';
+var lan3UsRate='<%ejGet(bcLan3UsRate)%>';
+var lan4DsRate='<%ejGet(bcLan4DsRate)%>';
+var lan4UsRate='<%ejGet(bcLan4UsRate)%>';
+
+
+function applyClick() {
+   var loc = 'bandwithcontrol.cmd?&action=save';
+   var digit = /^[0-9]+$/g;
+   
+   with (document.forms[0]) {
+	   if ( lan1EnblN.checked == true ) {
+			if (( lan1DsRateN.value == '' ) || ( lan1UsRateN.value == '' ))
+			{
+				alert('Error: Down/Upstream rate for LAN 1 could not be empty!');
+				return;
+			} else {
+				if (( parseInt(lan1DsRateN.value) < 100 ) || ( parseInt(lan1UsRateN.value) < 100 ))
+				{
+					alert('Error: Down/Upstream rate for LAN 1 is out of range 100 - 999999 !');
+					return;
+				}
+				else
+				{
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan1DsRateN.value)) )
+					{
+						alert('Downstream LAN 1 rate must be digit!');
+						return;
+					}
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan1UsRateN.value)) )
+					{
+						alert('Upstream LAN 1 rate must be digit!');
+						return;
+					}
+					
+					loc += '&bcLan1Enbl=1';
+					loc += '&bcLan1DsRate=' + lan1DsRateN.value;
+					loc += '&bcLan1UsRate=' + lan1UsRateN.value;
+				}
+			}
+	   } else {
+			loc += '&bcLan1Enbl=0';
+			loc += '&bcLan1DsRate=0';
+			loc += '&bcLan1UsRate=0';
+	   }
+	   
+	   if ( lan2EnblN.checked == true ) {
+			if (( lan2DsRateN.value == '' ) || ( lan2UsRateN.value == '' ))
+			{
+				alert('Error: Down/Upstream rate for LAN 2 could not be empty!');
+				return;
+			} else {
+				if (( parseInt(lan2DsRateN.value) < 100 ) || ( parseInt(lan2DsRateN.value) < 100 ))
+				{
+					alert('Error: Down/Upstream rate for LAN 2 is out of range 100 - 999999 !');
+					return;
+				}
+				else
+				{
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan2DsRateN.value)) )
+					{
+						alert('Downstream LAN 2 rate must be digit!');
+						return;
+					}
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan2UsRateN.value)) )
+					{
+						alert('Upstream LAN 2 rate must be digit!');
+						return;
+					}
+					
+					loc += '&bcLan2Enbl=1';
+					loc += '&bcLan2DsRate=' + lan2DsRateN.value;
+					loc += '&bcLan2UsRate=' + lan2UsRateN.value;
+				}
+			}
+	   } else {
+			loc += '&bcLan2Enbl=0';
+			loc += '&bcLan2DsRate=0';
+			loc += '&bcLan2UsRate=0';
+	   }
+	
+	   if ( lan3EnblN.checked == true ) {
+			if (( lan3DsRateN.value == '' ) || ( lan3UsRateN.value == '' ))
+			{
+				alert('Error: Down/Upstream rate for LAN 3 could not be empty!');
+				return;
+			} else {
+				if (( parseInt(lan3DsRateN.value) < 100 ) || ( parseInt(lan3DsRateN.value) < 100 ))
+				{
+					alert('Error: Down/Upstream rate for LAN 3 is out of range 100 - 999999 !');
+					return;
+				}
+				else
+				{
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan3DsRateN.value)) )
+					{
+						alert('Downstream LAN 3 rate must be digit!');
+						return;
+					}
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan3UsRateN.value)) )
+					{
+						alert('Upstream LAN 3 rate must be digit!');
+						return;
+					}
+					
+					loc += '&bcLan3Enbl=1';
+					loc += '&bcLan3DsRate=' + lan3DsRateN.value;
+					loc += '&bcLan3UsRate=' + lan3UsRateN.value;
+				}
+			}
+	   } else {
+			loc += '&bcLan3Enbl=0';
+			loc += '&bcLan3DsRate=0';
+			loc += '&bcLan3UsRate=0';
+	   } 
+	
+	   if ( lan4EnblN.checked == true ) {
+			if (( lan4DsRateN.value == '' ) || ( lan4UsRateN.value == '' ))
+			{
+				alert('Error: Down/Upstream rate for LAN 4 could not be empty!');
+				return;
+			} else {
+				if (( parseInt(lan4DsRateN.value) < 100 ) || ( parseInt(lan4DsRateN.value) < 100 ))
+				{
+					alert('Error: Down/Upstream rate for LAN 4 is out of range 100 - 999999 !');
+					return;
+				}
+				{
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan4DsRateN.value)) )
+					{
+						alert('Downstream LAN 4 rate must be digit!');
+						return;
+					}
+					digit = /^[0-9]+$/g;
+					if ((!digit.test(lan4UsRateN.value)) )
+					{
+						alert('Upstream LAN 4 rate must be digit!');
+						return;
+					}
+					
+					loc += '&bcLan4Enbl=1';
+					loc += '&bcLan4DsRate=' + lan4DsRateN.value;
+					loc += '&bcLan4UsRate=' + lan4UsRateN.value;
+				}
+			}
+	   } else {
+			loc += '&bcLan4Enbl=0';
+			loc += '&bcLan4DsRate=0';
+			loc += '&bcLan4UsRate=0';
+	   }  
+   }
+   
+   loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function frmLoad() {
+	
+	// Init Form
+	with ( document.forms[0] ) {
+		// Init here
+		if (lan1Enl == '1')
+		{
+		    setCheck(lan1EnblN, 1);
+		    lan1DsRateN.value = lan1DsRate;
+			lan1UsRateN.value = lan1UsRate;
+		}
+		if (lan2Enl == '1')
+		{
+		    setCheck(lan2EnblN, 1);
+		    lan2DsRateN.value = lan2DsRate;
+			lan2UsRateN.value = lan2UsRate;
+		}
+		if (lan3Enl == '1')
+		{
+		    setCheck(lan3EnblN, 1);
+		    lan3DsRateN.value = lan3DsRate;
+			lan3UsRateN.value = lan3UsRate;
+		}
+		if (lan4Enl == '1')
+		{
+		    setCheck(lan4EnblN, 1);
+		    lan4DsRateN.value = lan4DsRate;
+			lan4UsRateN.value = lan4UsRate;
+		}
+	}
+}
+
+// done hiding -->
+   </script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+           <div id="lanBandwithInfo">
+              <br><b>Bandwith Control - LAN ports</b><br>
+			  <br><i>Note: Downstream and Upstream rate must be in range from 100 - 999999</i><br>
+			  <br><br>
+              <table id="bwTbl" border="0" cellpadding="4" cellspacing="0">
+                 <tr> <td>
+                 <table border='1' cellpadding='2' cellspacing='0' align="left" >
+                    <tr>
+                       <td class='hd' valign="middle" align="center" width="30" height="30" >Enabled</td>                    
+                       <td class='hd' valign="middle" align="center" width="30" height="30" >Name</td>
+                       <td class='hd' valign="middle" align="center" width="30" height="30" >Downstream (Kbps)</td>                       
+                       <td class='hd' valign="middle" align="center" width="30" height="30" >Upstream (Kbps)</td>
+                    </tr>
+					<tr>
+						<td><input type='checkbox' %s name='lan1EnblN' value='ON' %s></td>
+						<td class='d' valign="middle" align="center" width="30" height="30" >LAN 1</td>
+						<td><input type='text' %s valign='middle' align='center' name='lan1DsRateN' maxlength='6' size='16' value=''></td>
+						<td><input type='text' %s valign='middle' align='center' name='lan1UsRateN' maxlength='6' size='14' value=''></td>
+					</tr>
+					<tr>
+						<td><input type='checkbox' %s name='lan2EnblN' value='ON' %s></td>
+						<td class='d' valign="middle" align="center" width="30" height="30" >LAN 2</td>
+						<td><input type='text' %s valign='middle' align='center' name='lan2DsRateN' maxlength='6' size='16' value=''></td>
+						<td><input type='text' %s valign='middle' align='center' name='lan2UsRateN' maxlength='6' size='14' value=''></td>
+					</tr>
+					<tr>
+						<td><input type='checkbox' %s name='lan3EnblN' value='ON' %s></td>
+						<td class='d' valign="middle" align="center" width="30" height="30" >LAN 3</td>
+						<td><input type='text' %s valign='middle' align='center' name='lan3DsRateN' maxlength='6' size='16' value=''></td>
+						<td><input type='text' %s valign='middle' align='center' name='lan3UsRateN' maxlength='6' size='14' value=''></td>
+					</tr>
+					<tr>
+						<td><input type='checkbox' %s name='lan4EnblN' value='ON' %s></td>
+						<td class='d' valign="middle" align="center" width="30" height="30" >LAN 4</td>
+						<td><input type='text' %s valign='middle' align='center' name='lan4DsRateN' maxlength='6' size='16' value=''></td>
+						<td><input type='text' %s valign='middle' align='center' name='lan4UsRateN' maxlength='6' size='14' value=''></td>
+					</tr>
+                 </table>
+                 </td></tr>
+              </table>
+           <br>
+           <br> 
+           </div> 
+           <center>
+               <input name='applyBut' type='button' value='Apply/Save' onClick='applyClick()'>
+           </center>
+         </form>
+      </blockquote>
+   </body>
+</html>
+

@@ -1,0 +1,39 @@
+<html>
+   <head>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <meta http-equiv="Pragma" content="no-cache">
+            <title></title>
+            <base target="_self">
+   </head>
+   <body>
+      <blockquote>
+         <table><tr><td class='h1'>DHCPv4</td></tr></table>
+         <br><br>
+         <table border="1" cellpadding="4" cellspacing="0" style="width:500">
+            <tr>
+               <td class="hd">Hostname</td>
+               <td class="hd">MAC Address</td>
+               <td class="hd">IPv4 Address</td>
+               <td class="hd">Expires In</td>
+               
+	        </tr>
+            <%ejGet(dhcpLeases)%>
+         </table>
+         <br><br>
+         <br><br>
+         <table><tr><td class='h1'>DHCPv6</td></tr></table>
+         <br><br>
+         <table border="1" cellpadding="4" cellspacing="0" style="width:500">
+            <tr>
+               <td class="hd">Hostname</td>
+               <td class="hd">MAC Address</td>
+               <td class="hd">IPv6 Address</td>
+               <td class="hd">Expires In</td>
+               
+           </tr>
+            <%ejGet(dhcpLeasesV6)%>
+         </table>
+      </blockquote>
+   </body>
+</html>

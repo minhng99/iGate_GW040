@@ -1,0 +1,280 @@
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache"/>
+<title>iGate GW040 GPON ONT</title>
+<style type="text/css">
+body {
+	font-family: Arial,sans-serief;
+	background-color: #ffffff;
+	margin: 0px;
+	padding: 0px;
+}
+div.loginBox {
+	display: block;
+	position: relative;
+	margin-top: 10%;
+	text-align: center;
+}
+.noteDiv {
+	color: gray;
+	font-family: Arial;
+	width: 395px;
+	text-align: left;
+	margin: 0px auto;
+	font-size: 14px;
+}
+div.panelThre
+{
+	margin-top:10px;
+}
+div.picDiv {
+	width: 395px;
+	height: 276px;
+	background: url(login_bg2.gif);
+	position: relative;
+}
+input.pcPassword {
+	width: 300px;
+	height: 50px;
+	line-height: 50px;
+	padding-left: 20px;
+}
+ul {
+	padding: 60px 0px 0px 0px;
+	margin: 0px;
+	list-style: none;
+}
+ul li {
+	height: 34px;
+	width: 222px;
+}
+li.unLi {
+	background: url(login_idunselect.gif);
+}
+li.pwLi {
+	background: url(login_pwunselect.gif);
+}
+li.blank {
+	height: 15px;
+}
+button.loginBtn {
+	height: 34px;
+	display: inline-block;
+	width: 113px;
+	border: 0px;
+	margin-top: 30px;
+	background: url(login.gif);
+	cursor: pointer;
+}
+input.text {
+	border: 0px;
+	height: 26px;
+	line-height: 26px;
+	width: 175px;
+	padding: 0px;
+	margin: 4px 0px 0px 30px;
+	font-size: 14px;
+	color: #6a6969;
+	font-family: Verdana,Arial;
+	font-weight: regular;
+	outline: none; /* For chrome textbox border */
+}
+#ban {
+	height: 90px;
+	background: #0ffffff url(lan2.gif) repeat-x;
+}
+</style>
+<script type="text/javascript">
+/* BY yl */
+var noPwd = false;
+var authTimes = 0;
+var expiredTime = 0;
+var displayBan = 1;
+/*EJ_PLACEHOLDER*/
+var isLocked = false;
+
+function Base64Encoding(input) {
+	var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	var output = "";
+	var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+	var i = 0;
+	input = utf8_encode(input);
+	while (i < input.length) {
+		chr1 = input.charCodeAt(i++);
+		chr2 = input.charCodeAt(i++);
+		chr3 = input.charCodeAt(i++);
+		enc1 = chr1 >> 2;
+		enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+		enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+		enc4 = chr3 & 63;
+		
+		if (isNaN(chr2)) {
+			enc3 = enc4 = 64;
+		} else if (isNaN(chr3)) {
+			enc4 = 64;
+		}
+		output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+	}
+	return output;
+}
+function utf8_encode(string) {
+	string = string.replace(/\r\n/g,"\n");
+	var utftext = "";
+	for (var n = 0; n < string.length; n++) {
+		var c = string.charCodeAt(n);
+		if (c < 128) {
+			utftext += String.fromCharCode(c);
+		} else if ((c > 127) && (c < 2048)) {
+			utftext += String.fromCharCode((c >> 6) | 192);
+			utftext += String.fromCharCode((c & 63) | 128);
+		} else {
+			utftext += String.fromCharCode((c >> 12) | 224);
+			utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+			utftext += String.fromCharCode((c & 63) | 128);
+		}
+	}
+	return utftext;
+}
+function PCWin(event) {
+	if (event.keyCode == 13) {
+		PCSubWin();
+	}
+}
+function PCSubWin0() {
+	var pw = $('pcPassword'), pw2 = $('pcPassword2');
+	var pwd = pw.value;
+	if (pwd == '' || pwd == 'admin' || pwd.indexOf(' ') != -1) {
+		alert('Password must be set and not be "admin" and not contain a space!');
+		pw.focus();
+		return false;
+	}
+	if (pwd != pw2.value) {
+		alert('The confirm password must be accordant with the new password!');
+		pw2.focus();
+		return false;
+	}
+	return true;
+}
+function PCSubWin() {
+	if ((noPwd && !PCSubWin0()) ||
+		(!noPwd && isLocked)) {
+		return;
+	}
+	var auth;
+	var password = $("pcPassword").value;
+	var userName = $("userName").value;
+	auth = "Basic "+ Base64Encoding(userName + " " + password);
+	document.cookie = "Authorization=" + auth;
+	location.reload();
+}
+function deleteCookie(name) {
+	var LargeExpDate = new Date();
+	document.cookie = name + "=; expires=" +LargeExpDate.toGMTString();
+}
+function w(str) {
+	document.write(str);
+}
+function $(id) {
+	return document.getElementById(id);
+}
+function lockWeb(bLock) {
+	$("userName").disabled = bLock;
+	$("pcPassword").disabled = bLock;
+}
+function pageLoad() {
+	deleteCookie("Authorization");
+	noPwd ? pageLoad0() : pageLoad1();
+}
+function pageLoad0() {
+	var node = $('ulNode'), node2;
+	node.innerHTML += '<li class="blank"></li><li id="pwLi2" class="pwLi"><input class="text" id="pcPassword2" type="password" maxlength="15"/></li>';
+	node.style.paddingTop = '30px';
+	node = $('userName'); node.value = 'admin'; node.disabled = true;
+	$('tip').innerHTML = 'Please set your password (must not be "admin").';
+	node = $('pcPassword'); node2 = $('pcPassword2');
+	node.onfocus = node2.onfocus = function() {
+		this.parentNode.style.background = 'url(login_pwselect.gif)';
+	};
+	node.onblur = node2.onblur = function() {
+		this.parentNode.style.background = 'url(login_pwunselect.gif)';
+	};
+	node.focus();
+}
+function pageLoad1() {
+	var tip = $("tip"), tipStr="", note = $("note");
+	var unLi = $("unLi");
+	var pwLi = $("pwLi");
+	var userName = $("userName");
+	var pcPassword = $("pcPassword");
+	var banner = $("ban");
+	if (displayBan == 0)
+		banner.style.display = "none";
+	pcPassword.onfocus = function() {
+		pwLi.style.background = "url(login_pwselect.gif)";
+	};
+	pcPassword.onblur = function() {
+		pwLi.style.background = "url(login_pwunselect.gif)";
+	};
+	userName.onfocus = function() {
+		unLi.style.background = "url(login_idselect.gif)";
+	};
+	userName.onblur = function() {
+		unLi.style.background = "url(login_idunselect.gif)";
+	};
+	if (authTimes > 0) {
+		note.innerHTML = "Note:";
+		tip.innerHTML = "You tried " + authTimes +" time. \nThe username or password is incorrect, please input again.";
+	}
+	if (authTimes < 3) {
+		userName.focus();
+	}
+	if (authTimes >= 3) {
+		isLocked = true;
+		lockWeb(true);
+		note.innerHTML = "Note:";
+		tipStr = "You have exceeded 3 attempts in 1 minute, please try again in ";
+		tip.innerHTML = tipStr + expiredTime + "s";
+		window.setTimeout(function() {
+			if (expiredTime <= 1) {
+				note.innerHTML = "";
+				tip.innerHTML = "";
+				isLocked = false;
+				lockWeb(false);
+				userName.focus();
+				return ;
+			}
+			expiredTime--;
+			tip.innerHTML = tipStr + expiredTime + "s";
+			window.setTimeout(arguments.callee, 1000);
+		}, 1000);
+	}
+}
+</script>
+</head>
+<body onload="pageLoad()" onkeypress="PCWin(event)">
+<div id="ban">
+	<a href="http://www.vnpt-technology.vn"><img id="logo" src="lan1.gif" style="float:left;" border="0"/></a>
+	<br>
+	<img id="bhr" src="lan3.gif" style="height:3px; width:100%; display:block;"/>
+</div>
+<div class="loginBox">
+	<div class="noteDiv">
+		<span id="note"></span>
+		<span id="tip"></span>
+	</div>
+	<div class="panelThre" align="center">
+		<div class="picDiv">
+			<ul id="ulNode">
+				<li id="unLi" class="unLi"><input class="text" id="userName" type="input" maxlength="15"/></li>
+				<li class="blank"></li>
+				<li id="pwLi" class="pwLi"><input class="text" id="pcPassword" type="password" maxlength="15"/></li>
+			</ul>
+			<button type="button" class="loginBtn" onclick="PCSubWin();return false"></button>
+			<div style="font-size: 10px; margin-top: 20px;">
+				<label id="copyright" >Copyright &copy;2013 - VNPT Technology.</label>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
